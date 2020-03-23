@@ -1,0 +1,48 @@
+{
+  matchesList {
+    edges {
+      node {
+        id
+        matchName
+        matchDate
+        matchScore
+        matchStatus
+      }
+    }
+  }
+}
+
+{
+  matches(id: "TWF0Y2hlczoy") {
+
+    id
+    matchName
+    matchDate
+    matchScore
+    matchStatus
+  }
+}
+
+mutation {
+  createMatch(input: {matchName: "tot vs me", matchDate: "2020-03-01 22:00:00", matchStatus: "finished", matchScore: "3-2"}) {
+    match {
+      id
+      matchName
+      matchDate
+      matchScore
+      matchStatus
+    }
+  }
+}
+
+mutation {
+  updateMatch(input: {matchName: "tot vs meme", matchDate: "2020-04-01 22:00:00", id: "TWF0Y2hlczo1"}) {
+     match{
+      id
+      matchName
+      matchDate
+      matchScore
+      matchStatus
+    }
+  }
+}
