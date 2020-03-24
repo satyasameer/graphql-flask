@@ -1,5 +1,6 @@
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
+
 from .base import Base
-from sqlalchemy import Column, ForeignKey, Integer, String, DateTime
 
 
 class ModelMatches(Base):

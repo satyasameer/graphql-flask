@@ -1,10 +1,11 @@
-from ast import literal_eval
-from database.model import ModelMatches
-from database import base
+import json
 import logging
 import sys
+from ast import literal_eval
 from datetime import datetime
-import json
+
+from database import base
+from database.model import ModelMatches
 
 # Load logging configuration
 log = logging.getLogger(__name__)

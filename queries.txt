@@ -47,3 +47,14 @@ mutation {
 }
 
 
+{
+  findMatch(date: "2020-03-2") {
+    matchId
+    matchName
+    matchDate
+    matchScore
+    matchStatus
+  }
+}
+
+
