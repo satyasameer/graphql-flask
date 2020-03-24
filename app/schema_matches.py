@@ -8,8 +8,8 @@ from database.base import db_session
 from database.model import ModelMatches
 
 
-# Create a generic class to mutualize description of people attributes for both queries and mutations
 class MatchAttribute:
+    match_id = graphene.String(description="match ID.")
     match_name = graphene.String(description="Who played in the match.")
     match_date = graphene.String(
         description="When it will be played/was played.")
@@ -18,7 +18,7 @@ class MatchAttribute:
 
 
 class Matches(SQLAlchemyObjectType, MatchAttribute):
-    """People node."""
+    """Matches node."""
 
     class Meta:
         model = ModelMatches
@@ -41,7 +41,7 @@ class CreateMatch(graphene.Mutation):
     def mutate(self, info, input):
         data = utils.input_to_dictionary(input)
         data['match_date'] = datetime.strptime(
-                data['match_date'], '%Y-%m-%d %H:%M:%S')
+                data['match_date'], '%Y-%m-%d')
 
         match = ModelMatches(**data)
         db_session.add(match)
@@ -51,7 +51,7 @@ class CreateMatch(graphene.Mutation):
 
 class UpdateMatchInput(graphene.InputObjectType, MatchAttribute):
     """Arguments to update a match."""
-    id = graphene.ID(required=True, description="Id of the match.")
+    match_id=graphene.String(required=True, description="Id of the match.")
 
 
 class UpdateMatch(graphene.Mutation):
@@ -63,20 +63,21 @@ class UpdateMatch(graphene.Mutation):
 
     def mutate(self, info, input):
         data = utils.input_to_dictionary(input)
-        data['match_date'] = datetime.strptime(
-                data['match_date'], '%Y-%m-%d %H:%M:%S')
+        if "match_date" in data.keys():
+            data['match_date'] = datetime.strptime(
+                 data['match_date'], '%Y-%m-%d')
 
-        match = db_session.query(ModelMatches).filter_by(id=data['id'])
+        match = db_session.query(ModelMatches).filter_by(match_id=data['match_id'])
         match.update(data)
         db_session.commit()
-        match = db_session.query(ModelMatches).filter_by(id=data['id']).first()
+        match = db_session.query(ModelMatches).filter_by(match_id=data['match_id']).first()
 
         return UpdateMatch(match=match)
 
 
 class DeleteMatchInput(graphene.InputObjectType, MatchAttribute):
     """Arguments to delete a match."""
-    id = graphene.ID(required=True, description="Id of the match.")
+    match_id=graphene.String(required=True, description="Id of the match.")
 
 
 class DeleteMatch(graphene.Mutation):
@@ -89,7 +90,7 @@ class DeleteMatch(graphene.Mutation):
     def mutate(self, info, input):
         data = utils.input_to_dictionary(input)
         match = ModelMatches(**data)
-        db_session.query(ModelMatches).filter_by(id=data['id']).delete()
+        db_session.query(ModelMatches).filter_by(match_id=data['match_id']).delete()
         db_session.commit()
 
         return DeleteMatch(match=match)

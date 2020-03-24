@@ -12,10 +12,9 @@
   }
 }
 
-{
-  matches(id: "TWF0Y2hlczoy") {
-
-    id
+query {
+  matches(matchId: "1") {
+    matchId
     matchName
     matchDate
     matchScore
@@ -36,7 +35,7 @@ mutation {
 }
 
 mutation {
-  updateMatch(input: {matchName: "tot vs meme", matchDate: "2020-04-01 22:00:00", id: "TWF0Y2hlczo1"}) {
+  updateMatch(input: {matchName: "tot vs meme", matchDate: "2020-04-01 22:00:00", match_id: "2"}) {
      match{
       id
       matchName
@@ -46,3 +45,5 @@ mutation {
     }
   }
 }
+
+

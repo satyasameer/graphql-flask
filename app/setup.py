@@ -23,9 +23,7 @@ if __name__ == '__main__':
         data = json.load(file)
         for record in data:
             record['match_date'] = datetime.strptime(
-                record['match_date'], '%Y-%m-%d %H:%M:%S')
+                record['match_date'], '%Y-%m-%d')
             match = ModelMatches(**record)
             base.db_session.add(match)
         base.db_session.commit()
-    # print("printing db records....")
-    # print(ModelMatches.query.all())
